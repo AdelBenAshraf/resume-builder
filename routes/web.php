@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FullstackResumeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('resumes', [FullstackResumeController::class, 'index']);
+Route::get('resumes/{id}', [FullstackResumeController::class, 'show']);
+Route::get('resumes/delete/{id}', [FullstackResumeController::class, 'destory']);
