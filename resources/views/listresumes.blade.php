@@ -44,9 +44,9 @@
             <td>{{$resume['educationdiscipline']}}</td>
             <td>{{$resume['educationplace']}}</td>
             <td><img src="/images/{{$resume['image']}}" width="50" height="50" style=" border-radius: 50%"></td>
-            <td><button><a href="{{'delete/'.$resume['id']}}">Delete</a></button></td>
-            <td><button><a href="{{'edit/'.$resume['id']}}">Edit</a></button></td>
-            <td><button><a href="{{'resumes/'.$resume['id']}}">View</a></button></td>
+            <td><button><a href="{{'/resumes/delete/'.$resume['id']}}">Delete</a></button></td>
+            <td><button><a href="{{'/editresume/'.$resume['id']}}">Edit</a></button></td>
+            <td><button><a href="{{'/resumes/'.$resume['id']}}">View</a></button></td>
 
 
         </tr>

@@ -20,4 +20,8 @@ Route::get('/', function () {
 
 Route::get('resumes', [FullstackResumeController::class, 'index']);
 Route::get('resumes/{id}', [FullstackResumeController::class, 'show']);
-Route::get('resumes/delete/{id}', [FullstackResumeController::class, 'destory']);
+Route::get('resumes/delete/{id}', [FullstackResumeController::class, 'destroy']);
+Route::get('createresume', [FullstackResumeController::class, 'create']);
+Route::post('createresume', [FullstackResumeController::class, 'store']);
+Route::get('editresume/{id}', [FullstackResumeController::class, 'edit']);
+Route::put('editresume', [FullstackResumeController::class, 'update']);
