@@ -37,7 +37,24 @@ class ResumeController extends Controller
             'educationplace' => 'required',
             'image' => 'required'
         ]);
-        return Resume::create($request->all());
+        $resume = new Resume();
+        $resume->name = $request->name;
+        $resume->email = $request->email;
+        $resume->age = $request->age;
+        $resume->phone = $request->phone;
+        $resume->address = $request->address;
+        $resume->worktitle = $request->worktitle;
+        $resume->workcompany = $request->workcompany;
+        $resume->educationdiscipline = $request->educationdiscipline;
+        $resume->educationplace = $request->educationplace;
+
+        $path = $request->file('image');
+        $filename = $path->getClientOriginalName();
+        $destinationPath = public_path().'/images';
+        $path->move($destinationPath,$filename);
+        $resume->image = $filename;
+        $resume->save();
+        return $resume;
     }
 
     /**
@@ -68,6 +85,17 @@ class ResumeController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required',
+            'age' => 'required',
+            'phone' => 'required',
+            'address' => 'required',
+            'worktitle' => 'required',
+            'workcompany' => 'required',
+            'educationdiscipline' => 'required',
+            'educationplace' => 'required',
+        ]);
        $resume = Resume::find($id);
        if (is_null($resume) || empty($resume))
        {
@@ -75,8 +103,31 @@ class ResumeController extends Controller
        }
        else
        {
-           $resume->update($request->all());
-           return $resume;
+        $resume->name = $request->name;
+        $resume->email = $request->email;
+        $resume->age = $request->age;
+        $resume->phone = $request->phone;
+        $resume->address = $request->address;
+        $resume->worktitle = $request->worktitle;
+        $resume->workcompany = $request->workcompany;
+        $resume->educationdiscipline = $request->educationdiscipline;
+        $resume->educationplace = $request->educationplace;
+
+        if (is_null($request->file('image')))
+        {
+            $resume->image = $resume->image;
+        }
+        else
+        {
+            $path = $request->file('image');
+            $filename = $path->getClientOriginalName();
+            $destinationPath = public_path().'/images';
+            $path->move($destinationPath,$filename);
+            $resume->image = $filename;
+        }
+        
+        $resume->save();
+        return $resume;
        }
     }
 
