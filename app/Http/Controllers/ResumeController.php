@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Resume;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\File;
+
 
 class ResumeController extends Controller
 {
@@ -14,7 +17,11 @@ class ResumeController extends Controller
      */
     public function index()
     {
-        return Resume::all();
+        $resumes = Resume::all();
+        return response()->json([
+            'status' => 200,
+            'resumes' => $resumes
+        ]);
     }
 
     /**
@@ -25,8 +32,8 @@ class ResumeController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required',
+        $validator = Validator::make($request->all(),[
+            'name' => 'required|string',
             'email' => 'required',
             'age' => 'required',
             'phone' => 'required',
@@ -35,26 +42,41 @@ class ResumeController extends Controller
             'workcompany' => 'required',
             'educationdiscipline' => 'required',
             'educationplace' => 'required',
-            'image' => 'required'
+            'image' => 'required|image|max:800'
         ]);
-        $resume = new Resume();
-        $resume->name = $request->name;
-        $resume->email = $request->email;
-        $resume->age = $request->age;
-        $resume->phone = $request->phone;
-        $resume->address = $request->address;
-        $resume->worktitle = $request->worktitle;
-        $resume->workcompany = $request->workcompany;
-        $resume->educationdiscipline = $request->educationdiscipline;
-        $resume->educationplace = $request->educationplace;
 
-        $path = $request->file('image');
-        $filename = $path->getClientOriginalName();
-        $destinationPath = public_path().'/images';
-        $path->move($destinationPath,$filename);
-        $resume->image = $filename;
-        $resume->save();
-        return $resume;
+        if($validator->fails())
+        {
+            return response()->json([
+                'status' => 400,
+                'errors' => $validator->messages() 
+            ]);
+        }
+        else
+        {
+            $resume = new Resume();
+            $resume->name = $request->name;
+            $resume->email = $request->email;
+            $resume->age = $request->age;
+            $resume->phone = $request->phone;
+            $resume->address = $request->address;
+            $resume->worktitle = $request->worktitle;
+            $resume->workcompany = $request->workcompany;
+            $resume->educationdiscipline = $request->educationdiscipline;
+            $resume->educationplace = $request->educationplace;
+
+            $path = $request->file('image');
+            $filename = $path->getClientOriginalName();
+            $destinationPath = public_path().'/images';
+            $path->move($destinationPath,$filename);
+            $resume->image = $filename;
+            $resume->save();
+            return response()->json([
+                'status' => 201,
+                'message' => 'Resume created successfully'
+            ]);
+        }
+        
     }
 
     /**
@@ -66,13 +88,19 @@ class ResumeController extends Controller
     public function show($id)
     {
         $resume = Resume::find($id);
-        if (is_null($resume) || empty($resume))
+        if ($resume)
         {
-            return ['Response' => 'The resume you want to show not found!'];
+            return response()->json([
+                'status' => 200,
+                'resume' => $resume
+            ]);
         }
         else
         {
-            return $resume;
+            return response()->json([
+                'status' => 404,
+                'message' => 'This resume not found'
+            ]);
         }
     }
 
@@ -85,7 +113,7 @@ class ResumeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(),[
             'name' => 'required',
             'email' => 'required',
             'age' => 'required',
@@ -95,39 +123,56 @@ class ResumeController extends Controller
             'workcompany' => 'required',
             'educationdiscipline' => 'required',
             'educationplace' => 'required',
+            
         ]);
+
+        if ($validator->fails())
+        {
+            return response()->json([
+                'status' => 422,
+                'errors' => $validator->messages()
+            ]);
+        }
+
        $resume = Resume::find($id);
-       if (is_null($resume) || empty($resume))
+       if ($resume)
        {
-           return ['Response' => 'The resume you want to update not found!'];
+            $resume->name = $request->name;
+            $resume->email = $request->email;
+            $resume->age = $request->age;
+            $resume->phone = $request->phone;
+            $resume->address = $request->address;
+            $resume->worktitle = $request->worktitle;
+            $resume->workcompany = $request->workcompany;
+            $resume->educationdiscipline = $request->educationdiscipline;
+            $resume->educationplace = $request->educationplace;
+
+            if ($request->hasFile('image'))
+            {
+                if (File::exists(public_path('images/'.$resume->image)))
+                {
+                    File::delete(public_path('images/'.$resume->image));
+                    $path = $request->file('image');
+                    $filename = $path->getClientOriginalName();
+                    $destinationPath = public_path().'/images';
+                    $path->move($destinationPath,$filename);
+                    $resume->image = $filename;
+                }
+            }
+            
+            
+            $resume->save();
+            return response()->json([
+                'status' => 200,
+                'message' => 'Resume updated successfully'
+            ]);
        }
        else
        {
-        $resume->name = $request->name;
-        $resume->email = $request->email;
-        $resume->age = $request->age;
-        $resume->phone = $request->phone;
-        $resume->address = $request->address;
-        $resume->worktitle = $request->worktitle;
-        $resume->workcompany = $request->workcompany;
-        $resume->educationdiscipline = $request->educationdiscipline;
-        $resume->educationplace = $request->educationplace;
-
-        if (is_null($request->file('image')))
-        {
-            $resume->image = $resume->image;
-        }
-        else
-        {
-            $path = $request->file('image');
-            $filename = $path->getClientOriginalName();
-            $destinationPath = public_path().'/images';
-            $path->move($destinationPath,$filename);
-            $resume->image = $filename;
-        }
-        
-        $resume->save();
-        return $resume;
+            return response()->json([
+                'status' => 404,
+                'message' => 'Resume Not Found'
+            ]);
        }
     }
 
@@ -140,14 +185,21 @@ class ResumeController extends Controller
     public function destroy($id)
     {
         $resume = Resume::find($id);
-        if (is_null($resume) || empty($resume))
+        if ($resume)
        {
-           return ['Response' => 'The resume you want to delete not found!'];
+            $resume->destroy($id);
+            return response()->json([
+            'status' => 200,
+            'message' => 'Resume Deleted Successfully',
+           ]);
        }
        else
        {
-           $resume->destroy($id);
-           return ['Response' => 'The resume has been deleted!'];
+           
+           return response()->json([
+            'status' => 404,
+            'message' => 'This Resume was not found'
+           ]);
        }
     }
 

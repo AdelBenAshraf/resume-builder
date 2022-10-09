@@ -8,7 +8,7 @@
    <body>
       <div class="login-box">
       <h2>Fill your Resume</h2>
-      <form action = "/createresume" method = "post" enctype="multipart/form-data">
+      <form action = "/createresumeser" method = "post" enctype="multipart/form-data">
          <input type = "hidden" name = "_token" value = "<?php echo csrf_token() ?>">
          <div class="user-box">
             <input type="text" name="name" required="">
