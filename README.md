@@ -23,3 +23,33 @@ I made a resume builder as part of my summer internship at Dayra, using PHP, Lar
 <h4>Creating resume</h4>
 
 ![](https://github.com/AdelBenAshraf/resume-builder/blob/main/resume-builder-showcase/creating-resume-fullstack.gif)
+
+<h4>Viewing, updating and deleting resume</h4>
+
+![](https://github.com/AdelBenAshraf/resume-builder/blob/main/resume-builder-showcase/updating-and-deleting-viewing-fullstack.gif)
+
+<h3>Here are some GIFs showing login and register using api through Postman returning back the token after logging in</h3>
+
+![](https://github.com/AdelBenAshraf/resume-builder/blob/main/resume-builder-showcase/login-register-api.gif)
+
+<h3>Here are some screenshots from the frontend utilizing the api endpoints that I have made:</h3>
+
+<h4>Register and Login</h4>
+
+![](https://github.com/AdelBenAshraf/resume-builder/blob/main/resume-builder-showcase/register-react.png)
+
+![](https://github.com/AdelBenAshraf/resume-builder/blob/main/resume-builder-showcase/registered-react.png)
+
+![](https://github.com/AdelBenAshraf/resume-builder/blob/main/resume-builder-showcase/invalid-react.png)
+
+![](https://github.com/AdelBenAshraf/resume-builder/blob/main/resume-builder-showcase/loggedin-react.png)
+
+<h4>Create and viewing resume</h4>
+
+![](https://github.com/AdelBenAshraf/resume-builder/blob/main/resume-builder-showcase/create-resume-react.png)
+
+![](https://github.com/AdelBenAshraf/resume-builder/blob/main/resume-builder-showcase/resume-react.png)
+
+<h4>Logging out</h4>
+
+![](https://github.com/AdelBenAshraf/resume-builder/blob/main/resume-builder-showcase/logout-react.png)
