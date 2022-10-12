@@ -34,12 +34,10 @@ class AuthController extends Controller
                 'password' => bcrypt($request->password)
             ]);
     
-            $token = $user->createToken('resumetoken')->plainTextToken;
     
             return response()->json([
                 'status' => 201,
                 'name' => $user->name,
-                'token' => $token,
                 'message' => "Registered Successfully"
             ]);
         }
