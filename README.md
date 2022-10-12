@@ -14,4 +14,12 @@ I made a resume builder as part of my summer internship at Dayra, using PHP, Lar
 </ul>
 
 
-<p>At first I developed the resume builder as a full stack laravel application after that we implemented it once again but this time separtating the frontend making it with reactJs from the backend making it as a rest api using laravel also adding an authentication layer using laravel sanctum.</p>
+<p>At first I developed the resume builder as a fullstack laravel application after that we implemented it once again but this time separtating the frontend making it with reactJs from the backend making it as a rest api using laravel also adding an authentication layer using laravel sanctum.</p>
+
+<h2>Here some screenshots and GIFs showcasing the project</h2>
+
+<h3>Here are some GIFs showcasing the fullstack application without separtating the frontend from the backend</h3>
+
+<h4>Creating resume</h4>
+
+![](https://github.com/AdelBenAshraf/resume-builder/blob/main/resume-builder-showcase/creating-resume-fullstack.gif)
