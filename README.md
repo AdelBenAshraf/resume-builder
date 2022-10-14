@@ -34,6 +34,8 @@ I made a resume builder as part of my summer internship at Dayra, using PHP, Lar
 
 <h3>Here are some screenshots from the frontend utilizing the api endpoints that I have made:</h3>
 
+You can access the frontend repo through this link: https://github.com/AdelBenAshraf/resume-builder-frontend
+
 <h4>Register and Login</h4>
 
 ![](https://github.com/AdelBenAshraf/resume-builder/blob/main/resume-builder-showcase/register-react.png)
